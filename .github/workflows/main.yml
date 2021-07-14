@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: hp-web:${{ env.R_V }}
+          tags: fceek/hp-web:${{ env.R_V }}
       
       - name: Deploy
         uses: appleboy/ssh-action@master
