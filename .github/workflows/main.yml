@@ -21,6 +21,12 @@ jobs:
         run: echo "R_V=${GITHUB_REF:11}" >> $GITHUB_ENV
       - name: test version number
         run: echo ${{ env.R_V }} 
+        
+      - name: QEMU
+        uses: docker/setup-qemu-action@v1
+        
+      - name: Buildx
+        uses: docker/setup-buildx-action@v1
 
       - name: Check out
         uses: actions/checkout@v2
@@ -44,4 +50,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PharsePWD }}
           port: 22
-          script: docker run -dp 3000:3000 hp-web:${{ env.R_V }}
+          script: docker run -dp 3000:3000 fceek/hp-web:${{ env.R_V }}
