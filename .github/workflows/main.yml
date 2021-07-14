@@ -50,4 +50,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PharsePWD }}
           port: 22
-          script: docker run -dp 3000:3000 fceek/hp-web:${{ env.R_V }}
+          script: |
+            docker stop $(docker ps -a -q)
+            docker rm $(docker ps -a -q)
+            docker run -dp 3000:3000 fceek/hp-web:${{ env.R_V }}
