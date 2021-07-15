@@ -1,5 +1,27 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title} again, now with docker
+doctype html
+html 
+  head 
+    title= title 
+    link(rel="stylesheet", href="/stylesheets/index_master.css")
+    link(rel="stylesheet", href="https://use.typekit.net/ziu3mel.css")
+    script(src="/javascripts/anime.min.js") 
+    script(src="/javascripts/index_animation.js")
+  body 
+    div(class='container')
+      div(class='landing')
+        div(class='title-bar')
+          ul(class='title-list')
+            li(onmouseover='changeToIcon(this)', id='title-list-heartphase', str='HeartPhase.') HeartPhase.
+            li(onmouseover='_changeMainText(this)', id='title-list-studio', class='animated-li', str='Studio') Studio
+            li(onmouseover='_changeMainText(this)', id='title-list-web', class='animated-li', str='Web') Web
+            li(onmouseover='_changeMainText(this)', id='title-list-tutorial', class='animated-li', str='Tutorial') Tutorial
+            li(onmouseover='_changeMainText(this)', id='title-list-community', class='animated-li', str='Community') Community
+        div(class='video')
+          div(class='video-overlay')
+            div(class='video-overlay-main')
+              p(class='mainText') Power of heart
+            div(class='video-overlay-more')
+              p(class='moreText') 
+          div(class='video-overlay-enter')
+            p(class='enterText') ↓
+          video(src='../images/LightGrad.webm', class='landing-vid', autoplay muted loop) 
