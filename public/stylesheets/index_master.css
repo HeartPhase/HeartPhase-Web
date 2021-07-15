@@ -37,6 +37,25 @@
     }
 }
 
+.preloader {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../images/Bg.jpg');background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 999;
+}
+
+.preloader > p {
+    margin-top: 2rem;
+    margin-left: 4rem;
+    font-size: 1.5rem;
+    background: -webkit-linear-gradient(#DD6777, #2769da);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 body {
     max-width: 90rem;
     min-width: 960px;

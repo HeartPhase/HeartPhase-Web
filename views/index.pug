@@ -3,10 +3,12 @@ html
   head 
     title= title 
     link(rel="stylesheet", href="/stylesheets/index_master.css")
-    link(rel="stylesheet", href="https://use.typekit.net/ziu3mel.css")
+    link(rel="stylesheet", href="https://use.typekit.net/ziu3mel.css" defer)
     script(src="/javascripts/anime.min.js") 
     script(src="/javascripts/index_animation.js")
-  body 
+  body(onload='endLoad()')
+    div(class='preloader')
+      p loading...
     div(class='container')
       div(class='landing')
         div(class='title-bar')

@@ -2,7 +2,17 @@ var hpTimeline;
 var last = 'HeartPhase.';
 var moreText, mainText;
 
-window.onload = function() {
+function endLoad() {
+    var preloader = document.querySelector(".preloader");
+    anime({
+        targets: '.preloader',
+        opacity: [1, 0],
+        duration: 1600,
+        loop: false,
+        complete: function(anim) {
+            preloader.style.display = 'none';
+        }
+    });
     mainText = document.querySelector('.mainText');
     moreText= document.querySelector('.moreText');
     hpTimeline = anime.timeline({loop: true});
