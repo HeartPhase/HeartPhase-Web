@@ -1,0 +1,20 @@
+p.test-all {
+    width: 600px;
+    word-break: break-all;
+}
+
+button.letter.unknown {
+    background-color: grey;
+}
+
+button.letter.correct {
+    background-color: darkseagreen;
+}
+
+button.letter.contain {
+    background-color: bisque;
+}
+
+button.letter.exclude {
+    background-color: indianred;
+}
