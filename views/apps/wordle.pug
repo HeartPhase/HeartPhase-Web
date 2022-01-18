@@ -1,0 +1,20 @@
+extends ../layout
+
+block styles
+  link(rel="stylesheet", href="/stylesheets/apps/wordle.css")
+  script(src="/javascripts/apps/wordle.js") 
+
+block content 
+  div(class='container')
+    div(class='filter', hidden = true)
+      input(type="text", name="letter1")
+      input(type="text", name="letter2")
+      input(type="text", name="letter3")
+      input(type="text", name="letter4")
+      input(type="text", name="letter5")
+
+    div(class='loading', hidden = false)
+
+    div(class='failed', hidden = true)
+      p failed to load word list from server
+
