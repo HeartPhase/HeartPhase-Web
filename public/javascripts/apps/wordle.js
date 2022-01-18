@@ -1,6 +1,5 @@
 let oReq, dataReq;
 let app, loading, failed;
-let words, results, filter;
 
 window.onload = function () {
     oReq = new XMLHttpRequest();
@@ -36,6 +35,9 @@ function reqListener() {
     }
 }
 
+let orders, buttons;
+let words, results, filterCorrect, filterOther;
+
 function dataReqListener() {
     const response = dataReq.responseText;
     console.log('data request received');
@@ -47,26 +49,91 @@ function dataReqListener() {
 
 function appStart() {
     console.log('app start');
-    filter = ['[a-z]','[a-z]','[a-z]','[a-z]','[a-z]'];
-    var count =  0;
-    document.querySelectorAll('.letter').forEach(item => {
-        item.index = count++;
-        item.addEventListener('change', inputReceived, false);
+    let count =  0;
+    filterCorrect = ['[a-z]','[a-z]','[a-z]','[a-z]','[a-z]'];
+    filterOther = new Array(26).fill(0);
+    orders = document.querySelectorAll('.order');
+    orders.forEach(item => {
+        item.index = count;
+        item.addEventListener('change', orderReceived, false);
+        count++;
+    })
+
+    count = 0;
+    buttons = document.querySelectorAll('.letter');
+    buttons.forEach(item => {
+        item.index = count;
+        item.addEventListener('click', inputReceived, false);
+        item.innerHTML = String.fromCharCode(count + 97);
+        count++;
     })
     results = document.querySelector('.results');
 }
 
-function inputReceived(e) {
+function orderReceived(e) {
     let index = e.target.index;
     let newValue = e.target.value;
     if (!newValue.match(/[a-zA-Z]/)) {
         e.target.value = '';
+        filterCorrect[index] = '[a-z]';
         return;
     }
+    newValue = newValue.toLowerCase();
+    filterCorrect[index] = newValue;
+    SetButtonAtIndexToState(newValue.charCodeAt(0) - 97, 81);
 
-    filter[index] = newValue.toLowerCase();
-    let reg = new RegExp(filter.join(''));
-    let filteredList = words.filter(word => word.match(reg));
+    GetResults();
+}
+
+function SetButtonAtIndexToState(index, state) {
+    console.log(index + ' to '+ state);
+    let targetButton = buttons[index];
+    targetButton.classList.remove(classEnum[filterOther[index]]);
+    filterOther[index] = state;
+    targetButton.classList.add(classEnum[filterOther[index]]);
+}
+
+function inputReceived(e) {
+    let index = e.target.index;
+    if (filterOther[index] === 81) return;
+
+    let limit = filterOther.filter(f => f === 1 | f === 81).length;
+    e.target.classList.remove(classEnum[filterOther[index]]);
+    if (limit >= 5 && filterOther[index] !== 1) filterOther[index] += 2;
+    else filterOther[index]++;
+    if (filterOther[index] >= 3) filterOther[index] = 0;
+    e.target.classList.add(classEnum[filterOther[index]]);
+
+    GetResults();
+}
+
+function GetResults() {
+    // filter with correct characters
+    let rx = new RegExp(filterCorrect.join(''));
+    let filteredList = words.filter(w => w.match(rx));
+
+    // filter with wrong position characters
+    let filterContain = filterOther.map((state, i) => state === 1 ? i : -1).filter(i => i !== -1);
+    filterContain.forEach(i => {
+        let char = String.fromCharCode(i + 97);
+        console.log('contain' + char);
+        filteredList = filteredList.filter(w => w.includes(char));
+    })
+
+    let filterExclude = filterOther.map((state, i) => state === 2 ? i : -1).filter(i => i !== -1);
+    filterExclude.forEach(i => {
+        let char = String.fromCharCode(i + 97);
+        console.log('exclude' + char);
+        filteredList = filteredList.filter(w => !w.includes(char));
+    })
+
     results.innerHTML = filteredList.join(',');
+}
+
+let classEnum = {
+    0: 'unknown',
+    1: 'contain',
+    2: 'exclude',
+    81: 'correct'
 }
 
