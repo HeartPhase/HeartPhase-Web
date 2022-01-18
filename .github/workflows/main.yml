@@ -53,5 +53,5 @@ jobs:
           script: |
             docker stop $(docker ps -a -q)
             docker rm $(docker ps -a -q)
-            docker run -dp 3000:3000 fceek/hp-web:${{ env.R_V }} --name="hpweb"
+            docker run -dp 3000:3000 fceek/hp-web:${{ env.R_V }} --name hpweb
             docker exec hpweb sh -c "cd routes && echo ${{ env.NODE_REDIS_JS }} > Secret.js && cd .. && sh refresh.sh"
