@@ -1,20 +1,19 @@
 extends ../layout
 
 block styles
-  link(rel="stylesheet", href="/stylesheets/apps/wordle.css")
-  script(src="/javascripts/apps/wordle.js") 
+    link(rel="stylesheet", href="/stylesheets/apps/wordle.css")
+    script(src="/javascripts/apps/wordle.js")
 
 block content 
-  div(class='container')
-    div(class='filter', hidden = true)
-      input(type="text", name="letter1")
-      input(type="text", name="letter2")
-      input(type="text", name="letter3")
-      input(type="text", name="letter4")
-      input(type="text", name="letter5")
+    div(class='container')
+        div(class='filter', hidden)
+            - for (var x = 0; x < 5; x++)
+                input(type="text", class="letter", maxlength=1)
+            p(class='results') nothing here yet..
 
-    div(class='loading', hidden = false)
+        div(class='loading')
+            p loading...
 
-    div(class='failed', hidden = true)
-      p failed to load word list from server
+        div(class='failed', hidden)
+            p failed to load word list from server
 
