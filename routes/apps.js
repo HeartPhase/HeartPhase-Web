@@ -64,10 +64,16 @@ router.get('/wordle/list', function (req, res) {
     res.send(words.toString());
 });
 
-router.get('/wordle/exclude/:word', function (req, res) {
-    console.log(req.params.word);
+let excludes = [];
+
+router.post('/wordle/exclude/:word', function (req, res) {
+    excludes.push(req.params.word);
     // do sth to l1
     res.send('ok ok');
+});
+
+router.get('/wordle/exclude-list', function (req, res) {
+    res.send(excludes.join('|'));
 });
 
 module.exports = router;

@@ -1,9 +1,10 @@
-let oReq, dataReq;
+let oReq, dataReq, exReq;
 let app, loading, failed;
 
 window.onload = function () {
     oReq = new XMLHttpRequest();
     dataReq = new XMLHttpRequest();
+    exReq = new XMLHttpRequest();
 
     app = document.querySelector('.filter');
     loading = document.querySelector('.loading');
@@ -67,12 +68,16 @@ function appStart() {
         item.innerHTML = String.fromCharCode(count + 97);
         count++;
     })
-    results = document.querySelector('.results');
+    results = document.querySelector('.results-list');
 }
 
 function orderReceived(e) {
     let index = e.target.index;
     let newValue = e.target.value;
+    let cachedIndex = filterCorrect[index].charCodeAt(0) - 97;
+    if (cachedIndex >= 0 && cachedIndex <= 25) {
+        SetButtonAtIndexToState(cachedIndex, 0);
+    }
     if (!newValue.match(/[a-zA-Z]/)) {
         e.target.value = '';
         filterCorrect[index] = '[a-z]';
@@ -127,7 +132,16 @@ function GetResults() {
         filteredList = filteredList.filter(w => !w.includes(char));
     })
 
-    results.innerHTML = filteredList.join(',');
+    let resultsHtml = '';
+    filteredList.forEach(w => {
+        resultsHtml += '<li>' + w + '<button onclick="excludeOnClick(\'' + w + '\')">NO</button></li>';
+    })
+    results.innerHTML = resultsHtml;
+}
+
+function excludeOnClick(e) {
+    exReq.open('POST', 'wordle/exclude/' + e, false);
+    exReq.send();
 }
 
 let classEnum = {

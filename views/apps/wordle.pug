@@ -2,16 +2,42 @@ extends ../layout
 
 block styles
     link(rel="stylesheet", href="/stylesheets/apps/wordle.css")
+    link(rel="stylesheet", href="https://use.typekit.net/vns2wte.css")
     script(src="/javascripts/apps/wordle.js")
 
 block content 
     div(class='container')
+        div(class='title')
+            h1 Wordle Helper
+
         div(class='filter', hidden)
-            - for (var i = 0; i < 5; i++)
-                input(type='text', class='order', maxlength=1)
-            - for (var x = 0; x < 26; x++)
-                button(class="letter unknown")
-            p(class='results') nothing here yet..
+            div(class='filter-left')
+                div(class='confirm')
+                    div(class='confirm-title')
+                        h2 Confirmed
+                        p Fill in characters that are correct!
+                    div(class='confirm-list')
+                        - for (var i = 0; i < 5; i++)
+                            input(type='text', class='order', maxlength=1)
+                div(class='alphabet')
+                    div(class='alphabet-title')
+                        h2 Alphabet
+                        p Click to switch between clue status!
+                    div(class='alphabet-list')
+                        - for (var x = 0; x < 26; x++)
+                            button(class="letter unknown")
+                    div(class='alphabet-legend')
+                        p
+                            !='<span class="legend unknown">■</span>Unknown<span class="legend contain">■</span>Included<span class="legend exclude">■</span>Not Included<span class="legend correct">■</span>Correct'
+
+            div(class='results')
+                div(class='results-title')
+                    h2 Results
+                div(class='results-info')
+                    p Click 'NO' to report non-listed word to server!
+                div(class='results-list-container')
+                    ul(class='results-list')
+                        li nothing yet...
 
         div(class='loading')
             p loading...
