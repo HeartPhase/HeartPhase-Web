@@ -134,7 +134,7 @@ function GetResults() {
 
     let resultsHtml = '';
     filteredList.forEach(w => {
-        resultsHtml += '<li>' + w + '<button onclick="excludeOnClick(\'' + w + '\')">NO</button></li>';
+        resultsHtml += '<li>' + w + '</li>';
     })
     results.innerHTML = resultsHtml;
 }
